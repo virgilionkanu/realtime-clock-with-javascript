@@ -1,23 +1,24 @@
 function realtimeClock() {
-    var rtClock = new Date();
+  var watch = document.querySelector("#clock");
 
-    var hours = rtClock.getHours();
-    var minutes = rtClock.getMinutes();
-    var seconds = rtClock.getSeconds();
+  function getHour() {
+    var date = new Date();
+    var h = formateDate(date.getHours());
+    var m = formateDate(date.getMinutes());
+    var s = formateDate(date.getSeconds());
 
-    //AM and PM system
-    var amPm = (hours < 12) ? "AM" : "PM";
+    return h + ":" + m + ":" + s;
+  }
 
-    //Convert the hours to 12-hour format
-    hours = (hours > 12) ? - 12 : hours;
+  function formateDate(t) {
+    return t < 10 ? "0" + t : t;
+  }
 
-    //
-    hours = ("0" + hours).slice(-2);
-    minutes = ("0" + minutes).slice(-2);
-    seconds = ("0" + seconds).slice(-2);
+  function showWatch(current) {
+    watch.textContent = current;
+  }
 
-    //Display the clock
-    document.getElementById('clock').innerHTML = 
-        hours + " : " + minutes + " : " + seconds + " " + amPm;
-    var t = setTimeout(realtimeClock, 500);
+  setInterval(function () {
+    showWatch(getHour());
+  }, 1000);
 }
